@@ -1,0 +1,15 @@
+{
+    "name": "lionser/wallet-address-validator",
+    "description": "Lightweight, dependency-free Base58/Base58Check/Bech32 validator for BTC (legacy + segwit/taproot), TRC20 (Tron) and Solana wallet addresses.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["base58", "base58check", "bech32", "bitcoin", "tron", "trc20", "solana", "wallet", "validator"],
+    "require": {
+        "php": ">=7.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Lionser\\": "src"
+        }
+    }
+}
