@@ -18,7 +18,7 @@
 ## Установка
 
 ```bash
-composer require yourname/wallet-address-validator
+composer require lionser/wallet-address-validator
 ```
 
 Либо просто скопируйте `src/*.php` в проект — зависимостей нет.
