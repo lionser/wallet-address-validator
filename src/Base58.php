@@ -26,6 +26,7 @@ final class Base58
         $alphabetMap = array_flip(str_split(self::ALPHABET));
 
         $leadingZeros = 0;
+
         while (isset($s[$leadingZeros]) && $s[$leadingZeros] === '1') {
             $leadingZeros++;
         }
@@ -34,6 +35,7 @@ final class Base58
 
         for ($i = 0, $len = strlen($s); $i < $len; $i++) {
             $value = $alphabetMap[$s[$i]] ?? null;
+
             if ($value === null) {
                 return null;
             }
@@ -45,6 +47,7 @@ final class Base58
                 $digits[$j] = $carry & 0xff;
                 $carry >>= 8;
             }
+
             while ($carry > 0) {
                 $digits[] = $carry & 0xff;
                 $carry >>= 8;
@@ -54,7 +57,7 @@ final class Base58
         $bytes = array_reverse($digits);
         $bytes = ltrim(implode('', array_map('chr', $bytes)), "\x00");
 
-        return Base58 . phpstr_repeat("\x00", $leadingZeros) . $bytes;
+        return str_repeat("\x00", $leadingZeros) . $bytes;
     }
 
     public static function encode(string $binary): string
@@ -65,7 +68,7 @@ final class Base58
             $leadingZeros++;
         }
 
-        $bytes = $binary === '' ? [] : array_values(unpack('C*', $binary));
+        $bytes  = $binary === '' ? [] : array_values(unpack('C*', $binary));
         $digits = [0];
 
         foreach ($bytes as $byte) {
@@ -76,6 +79,7 @@ final class Base58
                 $digits[$j] = $carry % 58;
                 $carry = intdiv($carry, 58);
             }
+
             while ($carry > 0) {
                 $digits[] = $carry % 58;
                 $carry = intdiv($carry, 58);

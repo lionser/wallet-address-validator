@@ -1,15 +1,33 @@
 {
     "name": "lionser/wallet-address-validator",
-    "description": "Lightweight, dependency-free Base58/Base58Check/Bech32 validator for BTC (legacy + segwit/taproot), TRC20 (Tron) and Solana wallet addresses.",
+    "description": "Lightweight PHP validator for BTC (legacy + segwit/taproot), TRC20 (Tron), Solana and ERC20/Ethereum wallet addresses.",
     "type": "library",
     "license": "MIT",
-    "keywords": ["base58", "base58check", "bech32", "bitcoin", "tron", "trc20", "solana", "wallet", "validator"],
+    "keywords": ["base58", "base58check", "bech32", "keccak256", "eip55", "bitcoin", "ethereum", "erc20", "tron", "trc20", "solana", "wallet", "validator"],
     "require": {
-        "php": ">=7.4"
+        "php": ">=8.3",
+        "kornrunner/keccak": "^1.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5",
+        "squizlabs/php_codesniffer": "^3.9",
+        "phpstan/phpstan": "^1.11"
     },
     "autoload": {
         "psr-4": {
             "Lionser\\": "src"
         }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Lionser\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "cs": "phpcs",
+        "cs-fix": "phpcbf",
+        "stan": "phpstan analyse",
+        "check": ["@cs", "@stan", "@test"]
     }
 }

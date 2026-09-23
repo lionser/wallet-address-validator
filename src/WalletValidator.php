@@ -9,6 +9,7 @@ final class WalletValidator
     public const NETWORK_BTC   = 'BTC';
     public const NETWORK_TRC20 = 'TRC20';
     public const NETWORK_SOL   = 'SOL';
+    public const NETWORK_ERC20 = 'ERC20';
 
     /** Bitcoin mainnet: P2PKH и P2SH. */
     private const array BTC_VERSION_BYTES = [0x00, 0x05];
@@ -65,9 +66,18 @@ final class WalletValidator
         return $bin !== null && strlen($bin) === self::SOL_PUBKEY_LENGTH;
     }
 
+    public static function isValidErc20Address(string $address): bool
+    {
+        return EthAddress::isValid($address);
+    }
+
     public static function detectNetwork(string $address): ?string
     {
         $address = trim($address);
+
+        if (self::isValidErc20Address($address)) {
+            return self::NETWORK_ERC20;
+        }
 
         if (self::isValidTrc20Address($address)) {
             return self::NETWORK_TRC20;
@@ -87,5 +97,18 @@ final class WalletValidator
     public static function isValid(string $address): bool
     {
         return self::detectNetwork($address) !== null;
+    }
+
+    /**
+     * @return array{valid: bool, network: string|null}
+     */
+    public static function validate(string $address): array
+    {
+        $network = self::detectNetwork($address);
+
+        return [
+            'valid'   => $network !== null,
+            'network' => $network,
+        ];
     }
 }
